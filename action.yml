@@ -1,10 +1,22 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: execute-discourse-query
+description: Executes a Discourse data-explorer query via the API
 inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  discourseKey:
+    description: The "all users" API key for your Discourse instance
+    required: true
+  hostname:
+    description: Hostname of your Discourse instance
+    required: true
+  id:
+    description: ID of the query to execute
+    required: true
+  params:
+    description: Parameters for your query in JSON
+outputs:
+  results:
+    description: Raw results of the query in JSON
+  markdown:
+    description: A Markdown table of the results if the query was successful
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: node12
+  main: dist/main.js
