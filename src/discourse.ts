@@ -28,10 +28,9 @@ interface QueryResponse {
 export async function executeQuery(
   hostname: string,
   id: string | number,
-  paramsText: string,
+  params: object,
   key: string
 ): Promise<QueryResponse> {
-  const params = JSON.parse(paramsText)
   const url = `https://${hostname}/admin/plugins/explorer/queries/${id}/run`
   const body = JSON.stringify({ params: JSON.stringify(params) })
 
