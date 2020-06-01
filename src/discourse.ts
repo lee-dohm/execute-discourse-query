@@ -12,17 +12,37 @@ interface Relations {
   [key: string]: object[]
 }
 
-interface QueryResponse {
-  success: boolean
-  errors: string[]
-  duration: number
-  result_count: number
-  params: Params
-  columns: string[]
-  default_limit: number
-  relations: Relations
+/**
+ * Response returned from a successful call to the Discourse query API.
+ */
+export interface QueryResults {
   colrender: Colrender
+
+  /** List of column names */
+  columns: string[]
+
+  /** Default limit on number of rows returned */
+  default_limit: number
+
+  /** Length of time it took to execute the query in milliseconds */
+  duration: number
+
+  /** Errors returned when parsing or executing the query */
+  errors: string[]
+
+  /** Params passed in to the query */
+  params: Params
+
+  relations: Relations
+
+  /** Number of rows returned */
+  result_count: number
+
+  /** Contents of the rows */
   rows: Array<Array<any>>
+
+  /** Flag indicating whether the query executed successfully */
+  success: boolean
 }
 
 export async function executeQuery(
@@ -30,7 +50,7 @@ export async function executeQuery(
   id: string | number,
   params: object,
   key: string
-): Promise<QueryResponse> {
+): Promise<QueryResults> {
   const url = `https://${hostname}/admin/plugins/explorer/queries/${id}/run`
   const body = JSON.stringify({ params: JSON.stringify(params) })
 
@@ -48,5 +68,31 @@ export async function executeQuery(
     throw new Error(`${response.status} ${response.statusText}`)
   }
 
-  return response.json() as Promise<QueryResponse>
+  return response.json() as Promise<QueryResults>
+}
+
+function buildSeparator(count: number) {
+  let separators: string[] = []
+
+  for (let i = 0; i < count; i++) {
+    separators.push('---')
+  }
+
+  return separators.join('|').concat('\n')
+}
+
+export async function resultsToTable(results: QueryResults): Promise<string> {
+  let text = results.columns.join(' | ').concat('\n', buildSeparator(results.columns.length))
+
+  results.rows.forEach(row => {
+    const fields = row
+      .map(value => {
+        return value.toString()
+      })
+      .join(' | ')
+
+    text = text.concat(fields, '\n')
+  })
+
+  return text
 }
