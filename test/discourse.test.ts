@@ -1,17 +1,5 @@
-import fs from 'fs'
-import path from 'path'
-import util from 'util'
-
 import { resultsToTable, QueryResults } from '../src/discourse'
-
-const readFile = util.promisify(fs.readFile)
-
-async function readFixture(filename: string) {
-  const text = (await readFile(path.join(__dirname, 'fixtures', filename), 'utf8')).toString()
-  const obj = JSON.parse(text)
-
-  return obj
-}
+import { readFixture } from './support'
 
 describe('resultsToTable', () => {
   let results: QueryResults
