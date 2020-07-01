@@ -45,6 +45,14 @@ export interface QueryResults {
   success: boolean
 }
 
+/**
+ * Executes a Discourse query.
+ *
+ * @param hostname Hostname of the Discourse instance to submit the query to
+ * @param id ID of the query to execute
+ * @param params Parameters to the query
+ * @param key API key to use to execute the query
+ */
 export async function executeQuery(
   hostname: string,
   id: string | number,
@@ -71,16 +79,11 @@ export async function executeQuery(
   return response.json() as Promise<QueryResults>
 }
 
-function buildSeparator(count: number) {
-  let separators: string[] = []
-
-  for (let i = 0; i < count; i++) {
-    separators.push('---')
-  }
-
-  return separators.join('|').concat('\n')
-}
-
+/**
+ * Converts the Discourse query results JSON into a Markdown table representation.
+ *
+ * @param results Results of the Discourse query
+ */
 export async function resultsToTable(results: QueryResults): Promise<string> {
   let text = results.columns.join(' | ').concat('\n', buildSeparator(results.columns.length))
 
@@ -95,4 +98,14 @@ export async function resultsToTable(results: QueryResults): Promise<string> {
   })
 
   return text
+}
+
+function buildSeparator(count: number) {
+  let separators: string[] = []
+
+  for (let i = 0; i < count; i++) {
+    separators.push('---')
+  }
+
+  return separators.join('|').concat('\n')
 }
