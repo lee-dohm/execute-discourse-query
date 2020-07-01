@@ -84,9 +84,9 @@ function buildSeparator(count: number) {
 export async function resultsToTable(results: QueryResults): Promise<string> {
   let text = results.columns.join(' | ').concat('\n', buildSeparator(results.columns.length))
 
-  results.rows.forEach(row => {
+  results.rows.forEach((row) => {
     const fields = row
-      .map(value => {
+      .map((value) => {
         return value.toString()
       })
       .join(' | ')
