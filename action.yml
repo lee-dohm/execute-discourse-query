@@ -4,6 +4,9 @@ inputs:
   discourseKey:
     description: The "all users" API key for your Discourse instance
     required: true
+  format:
+    description: "The format to store the results in: either 'json' or 'markdown'"
+    default: json
   hostname:
     description: Hostname of your Discourse instance
     required: true
@@ -11,12 +14,13 @@ inputs:
     description: ID of the query to execute
     required: true
   params:
-    description: Parameters for your query in JSON
+    description: JSON object containing the parameters for the query
+  path:
+    description: File path to store the results in
+    required: true
 outputs:
-  results:
-    description: Raw results of the query in JSON
-  markdown:
-    description: A Markdown table of the results if the query was successful
+  path:
+    description: File path where the results were stored
 runs:
   using: node12
   main: dist/main.js
