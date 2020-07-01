@@ -24,6 +24,7 @@ describe('resultsToTable', () => {
     const table = await resultsToTable(results)
     const rows = table.split('\n')
 
+    expect(rows.length).toEqual(10)
     expect(rows[0]).toEqual(
       'name | topic_count | avg_time_to_response | response_rate | avg_time_to_solve | solve_rate'
     )
