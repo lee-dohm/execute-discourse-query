@@ -28,12 +28,12 @@ async function run(): Promise<void> {
     switch (format) {
       case Format.JSON:
         await writeFile(path, json)
-        break;
+        break
 
       case Format.MARKDOWN:
         const table = await resultsToTable(json)
         await writeFile(path, table)
-        break;
+        break
     }
 
     core.setOutput('path', path)
