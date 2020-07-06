@@ -4,14 +4,10 @@ import util from 'util'
 import * as core from '@actions/core'
 
 import { executeQuery, resultsToTable } from './discourse'
-import { fstat } from 'fs'
+import { Format } from './format'
+import { validateFormat } from './validations'
 
 const writeFile = util.promisify(fs.writeFile)
-
-enum Format {
-  JSON = 'json',
-  MARKDOWN = 'markdown'
-}
 
 async function run(): Promise<void> {
   try {
@@ -40,18 +36,6 @@ async function run(): Promise<void> {
   } catch (error) {
     core.setFailed(error.message)
   }
-}
-
-function validateFormat(format: string): Format {
-  if (!(format in Format)) {
-    throw new Error(
-      `'${format}' is not a valid output format, please select one of: ${Object.values(Format).join(
-        ', '
-      )}`
-    )
-  }
-
-  return format as Format
 }
 
 run()
