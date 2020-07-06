@@ -3,7 +3,7 @@ import util from 'util'
 
 import * as core from '@actions/core'
 
-import { executeQuery, resultsToTable } from './discourse'
+import * as discourse from './discourse'
 import { Format } from './format'
 import { validateFormat } from './validations'
 
@@ -19,7 +19,7 @@ async function run(): Promise<void> {
     const params = rawParams ? JSON.parse(rawParams) : {}
     const path = core.getInput('path', { required: true })
 
-    const json = await executeQuery(hostname, id, params, discourseKey)
+    const json = await discourse.executeQuery(hostname, id, params, discourseKey)
 
     switch (format) {
       case Format.JSON:
@@ -27,7 +27,7 @@ async function run(): Promise<void> {
         break
 
       case Format.MARKDOWN:
-        const table = await resultsToTable(json)
+        const table = await discourse.resultsToTable(json)
         await writeFile(path, table)
         break
     }
