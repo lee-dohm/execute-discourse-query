@@ -11,10 +11,14 @@ describe('validateFormat', () => {
   })
 
   it('rejects foo as an option', () => {
-    expect(() => { validateFormat('foo') }).toThrow()
+    expect(() => {
+      validateFormat('foo')
+    }).toThrow()
   })
 
   it('rejects an empty string as an option', () => {
-    expect(() => { validateFormat('') }).toThrow()
+    expect(() => {
+      validateFormat('')
+    }).toThrow()
   })
 })
