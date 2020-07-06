@@ -14,3 +14,11 @@ jobs:
 
       - run: npm ci
       - run: npm run ci
+  integrationTest:
+    # For now simply checks to ensure no type errors sneak in to the build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: npm ci
+      - run: npm run build
