@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "description": "Executes a Discourse query via the API",
-  "main": "dist/main.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "npx ncc build ./src/main.ts",
     "ci": "npm run format-check && npm test",
