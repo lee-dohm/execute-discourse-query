@@ -19,15 +19,15 @@ async function run(): Promise<void> {
     const params = rawParams ? JSON.parse(rawParams) : {}
     const path = core.getInput('path', { required: true })
 
-    const json = await discourse.executeQuery(hostname, id, params, discourseKey)
+    const results = await discourse.executeQuery(hostname, id, params, discourseKey)
 
     switch (format) {
       case Format.JSON:
-        await writeFile(path, json)
+        await writeFile(path, JSON.stringify(results))
         break
 
       case Format.MARKDOWN:
-        const table = await discourse.resultsToTable(json)
+        const table = await discourse.resultsToTable(results)
         await writeFile(path, table)
         break
     }
