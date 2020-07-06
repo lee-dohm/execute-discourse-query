@@ -23,4 +23,4 @@ outputs:
     description: File path where the results were stored
 runs:
   using: node12
-  main: dist/main.js
+  main: dist/index.js
