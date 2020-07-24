@@ -23,10 +23,12 @@ async function run(): Promise<void> {
 
     switch (format) {
       case Format.JSON:
+        core.debug(`Write results to JSON file at ${path}`)
         await writeFile(path, JSON.stringify(results))
         break
 
       case Format.MARKDOWN:
+        core.debug(`Write results to Markdown file at ${path}`)
         const table = await discourse.resultsToTable(results)
         await writeFile(path, table)
         break
