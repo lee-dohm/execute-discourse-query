@@ -1,4 +1,5 @@
 import fetch from 'node-fetch'
+import * as core from '@actions/core'
 
 interface Colrender {
   [key: string]: string
@@ -60,7 +61,12 @@ export async function executeQuery(
   key: string
 ): Promise<QueryResults> {
   const url = `https://${hostname}/admin/plugins/explorer/queries/${id}/run`
-  const body = JSON.stringify({ params: JSON.stringify(params) })
+  const body = JSON.stringify({ params: JSON.stringify(params) }, null, 2)
+
+  core.debug(`Submit POST request: ${url}`)
+  core.debug('===== Body =====')
+  core.debug(body)
+  core.debug('================')
 
   const response = await fetch(url, {
     body: body,
@@ -71,6 +77,10 @@ export async function executeQuery(
     },
     method: 'POST'
   })
+
+  core.debug(`===== Response =====`)
+  core.debug(JSON.stringify(response, null, 2))
+  core.debug(`====================`)
 
   if (response.status != 200) {
     throw new Error(`${response.status} ${response.statusText}`)
