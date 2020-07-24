@@ -64,9 +64,7 @@ export async function executeQuery(
   const body = JSON.stringify({ params: JSON.stringify(params) }, null, 2)
 
   core.debug(`Submit POST request: ${url}`)
-  core.debug('===== Body =====')
-  core.debug(body)
-  core.debug('================')
+  debugBlock('Body', body)
 
   const response = await fetch(url, {
     body: body,
@@ -78,9 +76,7 @@ export async function executeQuery(
     method: 'POST'
   })
 
-  core.debug(`===== Response =====`)
-  core.debug(JSON.stringify(response, null, 2))
-  core.debug(`====================`)
+  debugBlock('Response', JSON.stringify(response, null, 2))
 
   if (response.status != 200) {
     throw new Error(`${response.status} ${response.statusText}`)
@@ -118,4 +114,14 @@ function buildSeparator(count: number) {
   }
 
   return separators.join('|').concat('\n')
+}
+
+function debugBlock(name: string, content: string) {
+  core.debug(`===== ${name} =====`)
+  core.debug(content)
+  core.debug(`======${repeat('=', name.length)}======`)
+}
+
+export function repeat(char: string, count: number): string {
+  return new Array(count + 1).join(char)
 }
