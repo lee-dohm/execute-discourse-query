@@ -96,7 +96,7 @@ export async function resultsToTable(results: QueryResults): Promise<string> {
   results.rows.forEach((row) => {
     const fields = row
       .map((value) => {
-        return value.toString()
+        return `${value}`
       })
       .join(' | ')
 
