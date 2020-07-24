@@ -1,5 +1,11 @@
-import { resultsToTable, QueryResults } from '../src/discourse'
+import { repeat, resultsToTable, QueryResults } from '../src/discourse'
 import { readFixture } from './support'
+
+describe('repeat', () => {
+  it('returns the expected text', () => {
+    expect(repeat('*', 3)).toEqual('***')
+  })
+})
 
 describe('resultsToTable', () => {
   let results: QueryResults
