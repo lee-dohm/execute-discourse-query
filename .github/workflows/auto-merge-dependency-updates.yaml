@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Merge dependency updates
-        uses: tjenkinson/gh-action-auto-merge-dependency-updates@v1
+        uses: tjenkinson/gh-action-auto-merge-dependency-updates@v1.0.2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           allowed-actors: dependabot-preview[bot], dependabot[bot]
