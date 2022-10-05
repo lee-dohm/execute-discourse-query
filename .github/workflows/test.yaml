@@ -10,7 +10,7 @@ jobs:
   unitTest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.1.0
 
       - run: npm ci
       - run: npm run ci
@@ -18,7 +18,7 @@ jobs:
     # For now simply checks to ensure no type errors sneak in to the build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.1.0
 
       - run: npm ci
       - run: npm run build
